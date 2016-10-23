@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from .views import HomeView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', HomeView.as_view(), name='home_url'),
 ]
 
 admin.site.site_header = 'PUMAS'
