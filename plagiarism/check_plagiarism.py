@@ -55,12 +55,11 @@ class Plagiarism(object):
             return (file1_data, file2_data)
 
     def doc_differences(self, file1, file2):
-diff_file1 = '/Users/ckgathi/Desktop/diff_file.txt'
-f = open(diff_file1)
-with open(file1) as file_1, open(file2) as file_2:
-    file1_data = file_1.read()
-    file2_data = file_2.read()
-    d = Differ()
-    result = list(d.compare(file1_data, file2_data))
-    import os
-    os.system(sys.stdout.writelines(result)) > lll.txt)
+        diff_file1 = '/Users/ckgathi/Desktop/diff_file.txt'
+        f = open(diff_file1)
+        with open(file1) as file_1, open(file2) as file_2:
+            file1_data = file_1.read()
+            file2_data = file_2.read()
+            d = Differ()
+            result = list(d.compare(file1_data, file2_data))
+            return result
