@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pumas',
+    'crispy_forms',
+    'pumas.apps.PumasAppConfig',
+    'upload.apps.UploadAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

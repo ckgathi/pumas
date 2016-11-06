@@ -1,0 +1,4 @@
+
+
+class NotPdfFormartError:
+    pass

@@ -3,8 +3,13 @@ from django.views.generic.edit import FormView
 
 from django.shortcuts import render
 
+from .forms import DocumentSearchForm
+from .models import Document
+
 
 class HomeView(TemplateView, FormView):
+
+    form_class = DocumentSearchForm
 
     def __init__(self):
         self.context = {}
@@ -15,9 +20,20 @@ class HomeView(TemplateView, FormView):
         self.context.update({})
         return render(request, self.template_name, self.context)
 
+    def form_valid(self, form):
+        if form.is_valid():
+            document_title = form.cleaned_data['document_title']
+            try:
+                self.documents = Document.objects.filter(document_title__icontains=document_title)
+            except Document.DoesNotExist:
+                form.add_error('document_title', 'document title not found. Please search again with a different title.')
+            context = self.get_context_data(form=form)
+            context.update({
+                'documents': self.documents})
+        return self.render_to_response(context)
+
     def post(self, request, *args, **kwargs):
         self.context.update({
-            'title': self.title
         })
         return render(request, self.template_name, self.context)
 

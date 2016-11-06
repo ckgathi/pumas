@@ -1,8 +1,7 @@
 import PyPDF2
 from difflib import SequenceMatcher, Differ
 from docx import Document
-from pprint import pprint
-import sys
+from plagiarism import NotPdfFormartError
 
 
 class Plagiarism(object):
@@ -16,6 +15,8 @@ class Plagiarism(object):
     file1 = '/Users/ckgathi/Desktop/FinalDraft.txt'
 
     def conver_pdf_to_txt(self, pdf_file_name):
+        if not pdf_file_name[-4:] == '.pdf':
+            raise NotPdfFormartError("The file that is being converted to a .txt file should be a .pdf file")
         pdf_file = open(pdf_file_name, 'rb')
         read_pdf = PyPDF2.PdfFileReader(pdf_file)
         number_of_pages = read_pdf.getNumPages()
@@ -43,16 +44,7 @@ class Plagiarism(object):
             file1_data = file_1.read()
             file2_data = file_2.read()
             similarity_ratio = SequenceMatcher(None, file1_data, file2_data).ratio()
-            similarity_ratio2 = SequenceMatcher(None, file1_data, file2_data).real_quick_ratio()
-            print(similarity_ratio)
-            print(similarity_ratio2)
             return similarity_ratio
-
-    def files_text(self, file1, file2):
-        with open(file1) as file_1, open(file2) as file_2:
-            file1_data = file_1.read()
-            file2_data = file_2.read()
-            return (file1_data, file2_data)
 
     def doc_differences(self, file1, file2):
         diff_file1 = '/Users/ckgathi/Desktop/diff_file.txt'
