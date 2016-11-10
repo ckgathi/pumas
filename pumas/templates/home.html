@@ -1,63 +1,24 @@
 
-{% extends 'pumas/base.html' %}
-<body>
- 
- 
- {% load staticfiles %}
-  {% load crispy_forms_tags %}
- 
- 
-<div class="container">
-  <h2>PUMAS</h2>
-  {% block content %}
+{% extends 'pumas/base.html' %} 
+{% block content %}
   <div class="panel-group">
     
     <div class="panel panel-default">
       <div class="panel-heading">Panel with panel-default class</div>
-      <div class="panel-body">
-      
-      <div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for snippets" />
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
-                                  <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-	</div>
-      
+      <div class="panel-body"></div>
       <div class="panel panel-success">
       <div class="panel-heading">Panel with panel-success class</div>
-      <div class="panel-body">
-      Panel Content
-      <a href="{% url 'upload_url' %}">link to the upload page</a>
+	      <div class="panel-body">
+	      Test url to upload template
+	      <a href="{% url 'upload_url' %}">link to the upload page</a>
+	      <br />
+	      Test url to view template <a href="{% url 'view_document_url' %}">View document</a>
+	      
+	      <br />
+	      Test url to supervisor upload view <a href="{% url 'supervisor_upload_view_url' %}">View document</a>
+	      </div>
       </div>
-    </div>
       
-      </div>
+     </div>
     </div>
-
-
-   </div>
-   {% endblock content %}
-</div>
+{% endblock content %}

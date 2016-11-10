@@ -1,0 +1,62 @@
+
+{% extends 'pumas/base.html' %}
+<body>
+ 
+ 
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="panel-group">
+     <div class="panel panel-default">
+     <div class="panel-heading">Document title</div>
+     <div class="panel-body">
+	    <div class="row">
+	    
+	    	<div class="col-md-8">
+	    	
+	    		<div class="panel panel-success">
+			      <div class="panel-heading">Document Details</div>
+			      <div class="panel-body">
+					Title: How to Write an Abstract Published by: Carnegie Mellon University, Author: Philip Koopman, Publication date: October, 1997
+
+			      </div>
+			    </div>
+				    
+			    <div class="panel panel-success">
+			      <div class="panel-heading">Document Abstract</div>
+			      <div class="panel-body">
+					Abstract
+					<br />
+					<br />
+					Because on-line search databases typically contain only abstracts, it is vital to write a complete but concise description of your work to entice potential
+					readers into obtaining a copy of the full paper. This article describes how to write a good computer architecture abstract for both conference and journal papers.
+					Writers should follow a checklist consisting of: motivation, problem statement, approach, results, and conclusions.
+					Following this checklist should increase the chance of people taking the time to obtain and read your complete paper.
+					Now that the use of on-line publication databases is prevalent, writing a really good abstract has become even more important than it was a decade ago.
+					Abstracts have always served the function of "selling" your work. But now, instead of merely convincing the reader to keep reading the rest of the attached paper,
+					an abstract must convince the reader to leave the comfort of an office and go hunt down a copy of the article from a library (or worse, obtain one after a long wait through inter-library loan).
+					In a business context, an "executive summary" is often the only piece of a report read by the people who matter; and it should be similar in content if not tone to a journal paper abstract.
+			      </div>
+			    </div>
+	    
+	    	</div>
+	    	
+	    	
+	    	<div class="col-md-4">
+	    	    <div class="panel panel-success">
+			      <div class="panel-heading">
+			      <a href="#" class="btn btn-info" role="button">View full text</a>
+			      <a href="#" class="btn btn-info" role="button">Download pdf</a>
+			      </div>
+			      <div class="panel-body">
+					Place some text here, any other details of the document or inormation that may be inserted here.
+			      </div>
+			    </div>
+	    	 </div>
+
+	    </div>
+      
+      </div>
+    </div>
+   </div>
+{% endblock content %}

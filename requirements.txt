@@ -1,0 +1,25 @@
+appnope==0.1.0
+chardet==2.3.0
+decorator==4.0.10
+Django==1.10.1
+django-crispy-forms==1.6.1
+docx==0.2.4
+ipython==5.1.0
+ipython-genutils==0.1.0
+lxml==3.6.4
+-e git+https://github.com/goulu/pdfminer.git@bc78fd2bea290123676fc3145eb7d385b3c2a617#egg=pdfminer.six
+pexpect==4.2.1
+pickleshare==0.7.4
+Pillow==3.4.2
+prompt-toolkit==1.0.8
+ptyprocess==0.5.1
+pycrypto==2.6.1
+Pygments==2.1.3
+PyPDF2==1.26.0
+python-dateutil==2.5.3
+python-docx==0.8.6
+python-editor==1.0.1
+simplegeneric==0.8.1
+six==1.10.0
+traitlets==4.3.1
+wcwidth==0.1.7

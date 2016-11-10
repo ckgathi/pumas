@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
 {% block header %}
 <head>
   <meta charset="utf-8">
@@ -7,6 +13,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+
+
+	<link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
   
     <title>Pumas</title>
 
@@ -29,7 +39,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <style>
+<style>
 body {
     padding-top: 50px;
 }
@@ -74,9 +84,12 @@ body {
     }
 }
 </style>
-  </head>
+ </head>
+ 
 {% endblock header%}
-  <body>
+
+
+ <body>
 
     <div class="container">
 
@@ -107,6 +120,44 @@ body {
         </div><!--/.container-fluid -->
       </nav>
 
+	{% block search %}
+		<div class="container-fluid">
+		<div class="row">
+		<div class="pull-right">
+            <div class="input-group" id="adv-search">
+                <input type="text" class="form-control" placeholder="Search for documents" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form class="form-horizontal" role="form">
+                                  <div class="form-group">
+                                    <label for="contain">Author</label>
+                                    <input class="form-control" type="text" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input class="form-control" type="text" />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <input class="form-control" type="text" />
+                                  </div>
+                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+	</div>
+	<br />
+	{% endblock search %}
+	
 	  {% block content %}
 	  {% endblock content %}
 	
@@ -122,5 +173,5 @@ body {
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+ </body>
 </html>

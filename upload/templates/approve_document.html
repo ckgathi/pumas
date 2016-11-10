@@ -1,0 +1,56 @@
+
+{% extends 'pumas/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="panel-group">
+     <div class="panel panel-default">
+     <div class="panel-heading">Approve Document & Plagirism</div>
+     <div class="panel-body">
+
+<div class="panel panel-success">
+     <div class="panel-heading">Document Infor</div>
+     <div class="panel-body">
+		Doc Infor
+     </div>
+</div>
+  <div class="row">
+<br />
+  	<div class="col-md-6">
+  	
+  		<div class="panel panel-success">
+      <div class="panel-heading">Plagirism Results</div>
+      <div class="panel-body">
+		Title: How to Write an Abstract Published by: Carnegie Mellon University, Author: Philip Koopman, Publication date: October, 1997
+      </div>
+    </div>
+  	</div>
+  	
+  	
+  	<div class="col-md-6">
+  	    <div class="panel panel-success">
+      <div class="panel-heading">
+      <a href="#" class="btn btn-info" role="button">View full text</a>
+      <a href="#" class="btn btn-info" role="button">Download pdf</a>
+      </div>
+      <div class="panel-body">
+		<h1>Doc abstract</h1>
+      </div>
+    </div>
+  	 </div>
+
+  </div>
+
+ <div class="panel panel-success">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+<h1>Approve Doc</h1>
+    </div>
+ </div>
+
+</div>
+</div>
+</div>
+{% endblock content %}
