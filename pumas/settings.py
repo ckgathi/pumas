@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'download_view_search.apps.DownloadViewSearchAppConfig',
     'pumas.apps.PumasAppConfig',
     'upload.apps.UploadAppConfig',
 ]

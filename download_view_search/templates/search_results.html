@@ -1,0 +1,95 @@
+
+{% extends 'pumas/base.html' %}
+<body>
+ 
+ 
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="panel-group">
+     <div class="panel panel-default">
+     <div class="panel-heading">Search Results</div>
+     <div class="panel-body">
+	    <div class="row">
+	    
+	    	<div class="col-md-3">
+			    <div class="panel panel-success">
+			      <div class="panel-heading">Filter results</div>
+			      <div class="panel-body">
+					<br />
+					<hr />
+					Years
+					<br />
+					<br />
+					<form action="demo_form.asp" method="get">
+						{% for year in past_five_years %}
+					  	<input type="checkbox" name="{{ year }}" value="{{ year }}">{{ year }}<br>
+					  	{% endfor %}
+					</form>
+					<hr />
+					Content type
+					<br />
+					<br />
+					<form action="demo_form.asp" method="get">
+						{% for content_type in content_types %}
+					  	<input type="checkbox" name="{{ content_type }}" value="{{ content_type }}">{{ content_type }}<br>
+					  	{% endfor %}
+					</form>
+					<hr />
+			      </div>
+			    </div>
+	    
+	    	</div>
+	    	
+	    	
+	    	<div class="col-md-9">
+	    	    <div class="panel panel-success">
+			      <div class="panel-heading">
+					Select Search results
+					doc | {{documents}} | doc
+			      </div>
+			      <div class="panel-body">
+			      <hr />
+					<p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				    <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+				  <p>Place some text here, any other details of the document or inormation that may be inserted here.</p>
+					<p><a href="#">Abstract</a> | <a href="#">Download PDF</a></p>
+				  <hr />
+			      </div>
+			    </div>
+	    	 </div>
+
+	    </div>
+      
+      </div>
+    </div>
+   </div>
+{% endblock content %}
