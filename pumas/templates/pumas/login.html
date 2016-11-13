@@ -1,0 +1,52 @@
+{% extends 'pumas/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block menu %}
+{% endblock menu %}
+
+{% block search %}
+{% endblock search %}
+
+
+{% block extra-css %}
+{{ block.super }}
+<style>
+.asteriskField {
+    display: none;
+}
+.edc-body {
+    padding-top: 65px;
+}
+</style>
+{% endblock extra-css %}
+
+
+{% block content %}
+<div class="container">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-heading"><h4 class="text-muted text-center">PUMAS: Login</h4></div>
+    		{% if messages %}
+    		    {% for message in messages %}
+    		      <div class="alert alert-danger text-center">
+    		    	{{ message }}
+    		      </div>
+    		    {% endfor %}
+    		{% endif %}
+    		{% csrf_token %}
+    		<div class="panel-body text-center">
+                {% crispy form %}
+            </div>
+          </div>
+      </div>
+
+    <div class="col-md-3"></div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

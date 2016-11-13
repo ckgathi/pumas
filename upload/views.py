@@ -1,10 +1,8 @@
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
-
 from django.shortcuts import render
+from pumas.views.base_view import BaseView
 
 
-class UploadView(TemplateView, FormView):
+class UploadView(BaseView):
 
     def __init__(self):
         self.context = {}
@@ -12,7 +10,7 @@ class UploadView(TemplateView, FormView):
         self.title = 'PUMAS'
 
     def get(self, request, *args, **kwargs):
-        self.context.update({})
+        self.context.update({'form_class': self.form_class})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
@@ -25,7 +23,7 @@ class UploadView(TemplateView, FormView):
         return super(UploadView, self).get_context_data(**kwargs)
 
 
-class SupervisorUploadView(TemplateView, FormView):
+class SupervisorUploadView(BaseView):
 
     def __init__(self):
         self.context = {}
@@ -33,7 +31,7 @@ class SupervisorUploadView(TemplateView, FormView):
         self.title = 'PUMAS'
 
     def get(self, request, *args, **kwargs):
-        self.context.update({})
+        self.context.update({'form_class': self.form_class})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
@@ -46,7 +44,7 @@ class SupervisorUploadView(TemplateView, FormView):
         return super(SupervisorUploadView, self).get_context_data(**kwargs)
 
 
-class ApproveDocument(TemplateView, FormView):
+class ApproveDocument(BaseView):
 
     def __init__(self):
         self.context = {}
@@ -54,7 +52,7 @@ class ApproveDocument(TemplateView, FormView):
         self.title = 'PUMAS'
 
     def get(self, request, *args, **kwargs):
-        self.context.update({})
+        self.context.update({'form_class': self.form_class})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):

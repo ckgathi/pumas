@@ -84,6 +84,8 @@ body {
     }
 }
 </style>
+{% block extra-css %}
+{% endblock extra-css %}
  </head>
  
 {% endblock header%}
@@ -94,6 +96,7 @@ body {
     <div class="container">
 
       <!-- Static navbar -->
+      {% block menu %}
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -114,12 +117,12 @@ body {
               <li><a href="">Undergradute projects</a></li>
               <li><a href="">Articles</a></li>
               <li><a href="">Gradute papers</a></li>
-              <li><button type="button" class="btn btn-default navbar-btn">Sign in</button></li>
+              <li><a href="{% url 'login_url' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
-
+	{% endblock menu %}
 	{% block search %}
 		<div class="container-fluid">
 		<form id="first-search" action="{% url 'search_results_url' %}" method="post">{% csrf_token %}</form>
@@ -152,65 +155,14 @@ body {
     </div> <!-- /container -->
 
 	<!-- Adding the Footer -->
-{% block footer %}
-<div class="container">
-<div id="footer">
-	<div class="inner">
-    	<div class="panel panel-default">
-		<div class="panel-heading">PUMAS - The Preferred Web Based Publication Management System</div>
-		<!--
-		<div class="panel-body">
-			<p>PUMAS is a web based publication management system developed in the UB for the world.</p> 
-		</div> -->
-
-		<div class="row">
-    		<div class="col-sm-4"><!--<h3>Column 1</h3>-->
-				<ul class="list-group">
-					<li class="list-group-item"><a href="#">View Document Categories</a></li>
-					<li class="list-group-item"><a href="https://ubrisa.ub.bw">UBRISA</a></li>
-					<li class="list-group-item"><a href="http://rms2.ub.bw/converis">UB RMS System</a></li>
-					<li class="list-group-item"><a href="#">View Undergraduate Projects</a></li>
-					<li class="list-group-item"><a href="#">View Postgraduate Projects</a></li>
-				</ul>
-			</div>
-			<div class="col-sm-4"><!--<h3>Column 2</h3>-->
-				<ul class="list-group">
-					<li class="list-group-item">Free Domain Name Registration</li>
-					<li class="list-group-item">Free Window Space hosting</li>
-					<li class="list-group-item">Number of Images</li>
-					<li class="list-group-item">24*7 support</li>
-					<li class="list-group-item">Renewal cost per year</li>
-				</ul>
-			</div>
-			<div class="col-sm-4"> <!--<h3>Column 3</h3>-->
-				<ul class="list-group">
-					<li class="list-group-item">Free Domain Name Registration</li>
-					<li class="list-group-item">Free Window Space hosting</li>
-					<li class="list-group-item">Number of Images</li>
-					<li class="list-group-item">24*7 support</li>
-					<li class="list-group-item">Renewal cost per year</li>
-				</ul>
-					</div>
-</div>
-    		
-    		
-    		<!--
-      		<ul class="links ">
-        		<li><a href="/terms-of-service">Terms of Service</a></li>
-        		<li><a href="/privacy-policy">Privacy</a></li>
-        		<li><a href="/security">Security</a></li>
-          		<li><a href="http://www.ub.bw">Support</a></li> 
-      		</ul> -->
-      		
-      		<!--<a href="http://www.ub.bw" class="invertocat">
-      			<img alt="The UB Logo" src="/assets/images/site/invertocat.png" width="24" height="24"></a> -->
-    		<p class="text-center">© <span id="year">2016</span> PUMAS Research Publications System. All rights reserved.
-    		</p>
-      		
-  		</div>
-	</div>
-</div>	
-	<!-- Ending the Footer -->
+{% block footer %} 
+<footer class="footer">
+  <div class="container">
+    <div class="col-md-4"><p class="text-muted text-center"><small>2016&nbsp;University of Botswana</small></p></div>
+    <div class="col-md-4"><p class="text-muted text-center"><small>Revision: xxxxx</small></p></div>
+    <div class="col-md-4"><p class="text-muted text-center"><small>For Research Purposes Only</small></p></div>
+  </div>
+</footer>
 {% endblock footer %}
     <!-- Bootstrap core JavaScript
     ================================================== -->

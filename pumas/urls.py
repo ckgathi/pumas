@@ -15,17 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+from pumas.views.login_view import LoginView
+from pumas.views.home_view import HomeView
+from pumas.views.logout_view import LogoutView
 
-from .views import HomeView
 
 urlpatterns = [
-#     url(r'^login/$', auth_views.login, name='login'),
-#     url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'accounts/login', LoginView.as_view(), name='login_url'),
+    url(r'login', LoginView.as_view(), name='login_url'),
+    url(r'logout', LogoutView.as_view(), name='logout_url'),
     url(r'^admin/', admin.site.urls),
     url(r'^upload/', include('upload.urls')),
     url(r'^download_seach_view/', include('download_view_search.urls')),
     url(r'^', HomeView.as_view(), name='home_url'),
+    url(r'^home/', HomeView.as_view(), name='home_url'),
 ]
 
 admin.site.site_header = 'PUMAS'
