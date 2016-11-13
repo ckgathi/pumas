@@ -10,6 +10,7 @@ class BaseView(TemplateView, FormView):
     form_class = DocumentSearchForm
 
     def form_valid(self, form, **kwargs):
+        context = {}
         if form.is_valid():
             title = form.cleaned_data['title']
             author = form.cleaned_data['author']
