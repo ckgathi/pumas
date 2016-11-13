@@ -1,5 +1,3 @@
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
 from django.utils import timezone
 
 from django.shortcuts import render
@@ -38,7 +36,7 @@ class SearchResults(BaseView):
     def get(self, request, *args, **kwargs):
         form = self.form_class(request.GET)
         if self.form_valid(form):
-            pass
+            print("Do you really come in here or u do not?")
         self.context.update({
             'past_five_years': self.past_five_years,
             'content_types': self.content_types,
@@ -46,9 +44,13 @@ class SearchResults(BaseView):
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if self.form_valid(form):
+            print("Do you really come in here or u do not?")
         self.context.update({
             'past_five_years': self.past_five_years,
-            'content_types': self.content_types})
+            'content_types': self.content_types,
+            'form_class': self.form_class})
         return render(request, self.template_name, self.context)
 
     @property
@@ -72,5 +74,6 @@ class SearchResults(BaseView):
         self.context = super(SearchResults, self).get_context_data(**kwargs)
         self.context.update({
             'past_five_years': self.past_five_years,
+            'form_class': self.form_class
         })
         return self.context

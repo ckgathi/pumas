@@ -27,22 +27,25 @@ class Student(models.Model):
 
 class Lecture(models.Model):
 
+    user = models.OneToOneField(User)
+
     stuff_id = models.IntegerField(
         verbose_name='Stuff Identifier',
         unique=True,
         help_text="Stuff identifier",
-        editable=False,
         db_index=True)
 
     is_supervisor = models.NullBooleanField(
-        default=None,
-        editable=False)
+        verbose_name='Are you a supervisor',
+        default=False,)
 
     class Meta:
         app_label = 'pumas'
 
 
 class Admin(models.Model):
+
+    user = models.OneToOneField(User)
 
     stuff_id = models.IntegerField()
 

@@ -17,9 +17,9 @@ class LoginView(FormInvalidMessageMixin, FormView):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        if request.GET:
-            form = self.form_class(request.GET)
-            self.form_valid(form)
+#         if request.GET:
+#             form = self.form_class(request.GET)
+#             self.form_valid(form)
         return super(LoginView, self).get(request, *args, **kwargs)
 
     @method_decorator(csrf_protect)

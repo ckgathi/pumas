@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 from pumas.views.base_view import BaseView
 
 
@@ -22,6 +25,10 @@ class UploadView(BaseView):
     def get_context_data(self, **kwargs):
         return super(UploadView, self).get_context_data(**kwargs)
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UploadView, self).dispatch(*args, **kwargs)
+
 
 class SupervisorUploadView(BaseView):
 
@@ -43,6 +50,10 @@ class SupervisorUploadView(BaseView):
     def get_context_data(self, **kwargs):
         return super(SupervisorUploadView, self).get_context_data(**kwargs)
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SupervisorUploadView, self).dispatch(*args, **kwargs)
+
 
 class ApproveDocument(BaseView):
 
@@ -63,3 +74,7 @@ class ApproveDocument(BaseView):
 
     def get_context_data(self, **kwargs):
         return super(ApproveDocument, self).get_context_data(**kwargs)
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ApproveDocument, self).dispatch(*args, **kwargs)

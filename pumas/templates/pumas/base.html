@@ -113,11 +113,14 @@ body {
               <li class="active"><a href="{% url 'home_url' %}">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="">Journals <span class="sr-only">(current)</span></a></li>
-              <li><a href="">Undergradute projects</a></li>
-              <li><a href="">Articles</a></li>
-              <li><a href="">Gradute papers</a></li>
-              <li><a href="{% url 'login_url' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a></li>
+              {% if user.is_authenticated %}
+		        <li><a href="{% url 'upload_url' %}">Upload document</a></li>
+		        {% if supervisor %}
+		        <li><a href="{% url 'supervisor_upload_view_url' %}">Approve documents</a></li>
+		        {% endif %}
+		      {% else %}
+              	<li><a href="{% url 'login_url' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a></li>
+              {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
