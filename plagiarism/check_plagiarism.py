@@ -24,22 +24,37 @@ class Plagiarism(object):
 
     def convert_docx_to_txt(self, docx_file_name):
         document = Document(docx_file_name)
-        txt_file = docx_file_name[:-4] + 'txt'
+        txt_file = docx_file_name[:-5] + 'txt'
         f = open(txt_file, 'wb')
         for p in document.paragraphs:
             f.write(p.text.encode("utf-8"))
             f.write('\n'.encode("utf-8"))
+        return txt_file
 
     def plagiarism_results(self, file1, file2):
-        with open(file1) as file_1, open(file2) as file_2:
+        txt_file1 = ''
+        txt_file2 = ''
+        if file1[-4:] == '.pdf':
+            txt_file1 = self.conver_pdf_to_txt(file1)
+        elif file1[-5:] == '.docx':
+            txt_file1 = self.convert_docx_to_txt(file1)
+        else:
+            txt_file1 = file1
+
+        if file2[-4:] == '.pdf':
+            txt_file2 = self.conver_pdf_to_txt(file2)
+        elif file2[-5:] == '.docx':
+            txt_file2 = self.convert_docx_to_txt(file2)
+        else:
+            txt_file2 = file2
+
+        with open(txt_file1) as file_1, open(txt_file2) as file_2:
             file1_data = file_1.read()
             file2_data = file_2.read()
             similarity_ratio = SequenceMatcher(None, file1_data, file2_data).ratio()
             return similarity_ratio
 
     def doc_differences(self, file1, file2):
-        diff_file1 = '/Users/ckgathi/Desktop/diff_file.txt'
-        f = open(diff_file1)
         with open(file1) as file_1, open(file2) as file_2:
             file1_data = file_1.read()
             file2_data = file_2.read()

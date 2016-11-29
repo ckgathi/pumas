@@ -17,7 +17,8 @@
 	    <th data-field="student_id">Student ID</th>
 	    <th data-field="doc_title">Document title</th>
 	    <th data-field="source_code">Source Code</th>
-	    <th data-field="program">Program</th>                                 
+	    <th data-field="program">Program</th>
+	    <th data-field="approval_status">Approval Status</th>                                 
 	    </thead>
 	    <tbody>
 	    	{% for document in documents %}
@@ -27,6 +28,13 @@
             <td><a href="{% url 'approve_document_url' document.4 %}">{{document.1}} | {{document.4}}</a></td>
             <td><a href="#">link to the source code</a></td>
             <td>{{document.3}}</td>
+            <td>
+            {% if document.5 %}
+            	Approved
+            {% else %}
+            	Rejected
+            {% endif %}
+            </td>
             </tr>
 	    	{% endfor %}
 	    </tbody>

@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -8,6 +10,7 @@ from pumas.models.document import ProjectDocument, Journal, ConferencePreceeding
     Document
 from pumas.models.user_profiles import Student, Lecture
 from plagiarism.check_plagiarism import Plagiarism
+from django.conf import settings
 
 
 class UploadView(BaseView):
@@ -107,6 +110,17 @@ class SupervisorUploadView(BaseView):
         user = request.user
         lecture = Lecture.objects.filter(user=user)
         students = Student.objects.filter(supervisor=lecture)
+        approval_status = request.GET.get('approval_status')
+        document_id = request.GET.get('document_id')
+        if document_id:
+            doc = Document.objects.get(id=document_id)
+            if approval_status == 'approved':
+                doc.approved = True
+                doc.save()
+            elif approval_status == 'rejected':
+                doc.approved = False
+                doc.save()
+        print(approval_status, document_id)
         documents = []
         supervisor = False
         if request.user.is_authenticated():
@@ -118,24 +132,24 @@ class SupervisorUploadView(BaseView):
         for student in students:
             project_documents = ProjectDocument.objects.filter(author=student.user)
             for proj_doc in project_documents:
-                documents.append([student.student_id, proj_doc.title, proj_doc.source_code, proj_doc.category, proj_doc.id])
+                documents.append([student.student_id, proj_doc.title, proj_doc.source_code, proj_doc.category, proj_doc.id, proj_doc.approved])
             journals = Journal.objects.filter(author=student.user)
             for journal in journals:
-                documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id])
+                documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id, proj_doc.approved])
             conference_preceedings = ConferencePreceeding.objects.filter(author=student.user)
             for conference_preceeding in conference_preceedings:
-                documents.append([student.student_id, conference_preceeding.title, 'No source code', conference_preceeding.category, proj_doc.id])
+                documents.append([student.student_id, conference_preceeding.title, 'No source code', conference_preceeding.category, proj_doc.id, proj_doc.approved])
             for journal in journals:
-                documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id])
+                documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id, proj_doc.approved])
             bookchapters = BookChapter.objects.filter(author=student.user)
             for bookchapter in bookchapters:
-                documents.append([student.student_id, bookchapter.title, 'No source code', bookchapter.category, proj_doc.id])
+                documents.append([student.student_id, bookchapter.title, 'No source code', bookchapter.category, proj_doc.id, proj_doc.approved])
             dessertations = Dessertation.objects.filter(author=student.user)
             for dessertation in dessertations:
-                documents.append([student.student_id, dessertation.title, 'No source code', dessertation.category, proj_doc.id])
+                documents.append([student.student_id, dessertation.title, 'No source code', dessertation.category, proj_doc.id, proj_doc.approved])
             thesiss = Thesis.objects.filter(author=student.user)
             for thesis in thesiss:
-                documents.append([student.student_id, thesis.title, 'No source code', thesis.category, proj_doc.id])
+                documents.append([student.student_id, thesis.title, 'No source code', thesis.category, proj_doc.id, proj_doc.approved])
         self.context.update({
             'form_class': self.form_class,
             'document_types': DOCUMENT_TYPES,
@@ -164,6 +178,10 @@ class ApproveDocument(BaseView):
         self.template_name = 'approve_document.html'
         self.title = 'PUMAS'
 
+    def uploaded_docs(self):
+        files = os.path.join(settings.MEDIA_ROOT, 'documents')
+        return os.listdir(files)
+
     def get(self, request, *args, **kwargs):
         user = request.user
         lecture = Lecture.objects.filter(user=user)
@@ -174,10 +192,14 @@ class ApproveDocument(BaseView):
             document = Document.objects.get(id=document_id)
         except Document.DoesNotExist:
             pass
+        plagiarism_results_list = []
+        files_path = os.path.join(settings.MEDIA_ROOT, 'documents')
         if document:
             plagiarism = Plagiarism()
-#             print(document.path)
-#             plagiarism_results = plagiarism.plagiarism_results(file1, file2)
+            file1 = document.document.path
+            for file2 in self.uploaded_docs():
+                file2 = files_path + '/' + file2
+                plagiarism_results_list.append([file2, plagiarism.plagiarism_results(file1, file2)])
         supervisor = False
         if request.user.is_authenticated():
             try:
@@ -185,33 +207,13 @@ class ApproveDocument(BaseView):
                 supervisor = lecture.is_supervisor
             except Lecture.DoesNotExist:
                 pass
-#         for student in students:
-#             project_documents = ProjectDocument.objects.filter(author=user)
-#             for proj_doc in project_documents:
-#                 documents.append([student.student_id, proj_doc.title, proj_doc.source_code, proj_doc.category, proj_doc.pk])
-#             journals = Journal.objects.filter(author=user)
-#             for journal in journals:
-#                 documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id])
-#             conference_preceedings = ConferencePreceeding.objects.filter(author=user)
-#             for conference_preceeding in conference_preceedings:
-#                 documents.append([student.student_id, conference_preceeding.title, 'No source code', conference_preceeding.category, proj_doc.id])
-#             for journal in journals:
-#                 documents.append([student.student_id, journal.title, 'No source code', journal.category, proj_doc.id])
-#             bookchapters = BookChapter.objects.filter(author=user)
-#             for bookchapter in bookchapters:
-#                 documents.append([student.student_id, bookchapter.title, 'No source code', bookchapter.category, proj_doc.id])
-#             dessertations = Dessertation.objects.filter(author=user)
-#             for dessertation in dessertations:
-#                 documents.append([student.student_id, dessertation.title, 'No source code', dessertation.category, proj_doc.id])
-#             thesiss = Thesis.objects.filter(author=user)
-#             for thesis in thesiss:
-#                 documents.append([student.student_id, thesis.title, 'No source code', thesis.category, proj_doc.id])
         self.context.update({
             'form_class': self.form_class,
             'document_types': DOCUMENT_TYPES,
             'documents': documents,
             'document': document,
-            'supervisor': supervisor})
+            'supervisor': supervisor,
+            'plagiarism_results_list': plagiarism_results_list})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
