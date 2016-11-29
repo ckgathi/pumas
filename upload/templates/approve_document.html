@@ -15,7 +15,7 @@
 		Doc Infor
      </div>
 </div>
-  <div class="row">
+  <div class="row" style="margin-bottom:20px;">
 <br />
   	<div class="col-md-6">
   	
@@ -28,20 +28,23 @@
   	</div>
   	
   	
+  	
   	<div class="col-md-6">
-  	    <div class="panel panel-success">
-      <div class="panel-heading">
-      <a href="#" class="btn btn-info" role="button">View full text</a>
-      <a href="#" class="btn btn-info" role="button">Download pdf</a>
-      </div>
-      <div class="panel-body">
-		<h1>Doc abstract</h1>
-      </div>
+  	 <div class="panel panel-success">
+	      <div class="panel-heading">
+	      <a href="{{document.document.url}}" class="btn btn-info" role="button" target="blank">View full text</a>
+	      <a href="{{document.document.url}}" class="btn btn-info" role="button" download>Download pdf</a>
+	      </div>
+	      <div class="panel-body">
+			{{document.abstract}}
+	      </div>
     </div>
-  	 </div>
+  	</div>
 
   </div>
 
+<div class="row">
+<div class="col-md-12">
  <div class="panel panel-success">
     <div class="panel-heading">
     </div>
@@ -49,6 +52,9 @@
 <h1>Approve Doc</h1>
     </div>
  </div>
+</div>
+</div>
+
 
 </div>
 </div>

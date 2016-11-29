@@ -6,14 +6,6 @@ from plagiarism import NotPdfFormartError
 
 class Plagiarism(object):
 
-    pdf_file_name = '/Users/ckgathi/Desktop/assignment2.pdf'
-
-    pdf_file_name = '/Users/ckgathi/Desktop/FinalDraft.pdf'
-    docx_file_name = '/Users/ckgathi/Desktop/FinalDraft.docx'
-    file1 = '/Users/ckgathi/Documents/source/all_code/pdfminer/t.txt'
-    file2 = '/Users/ckgathi/Desktop/FinalDraft2.txt'
-    file1 = '/Users/ckgathi/Desktop/FinalDraft.txt'
-
     def conver_pdf_to_txt(self, pdf_file_name):
         if not pdf_file_name[-4:] == '.pdf':
             raise NotPdfFormartError("The file that is being converted to a .txt file should be a .pdf file")
@@ -31,7 +23,6 @@ class Plagiarism(object):
         return txt_file
 
     def convert_docx_to_txt(self, docx_file_name):
-        docx_file_name = '/Users/ckgathi/Desktop/FinalDraft.docx'
         document = Document(docx_file_name)
         txt_file = docx_file_name[:-4] + 'txt'
         f = open(txt_file, 'wb')

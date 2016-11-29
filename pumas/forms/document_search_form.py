@@ -11,14 +11,17 @@ class DocumentSearchForm(forms.Form):
 
     title = forms.CharField(
         label='Title',
+        required=False,
         max_length=200)
 
     author = forms.CharField(
         label='Author',
+        required=False,
         max_length=200)
 
     category = forms.CharField(
         label='Category',
+        required=False,
         max_length=200)
 
     def __init__(self, *args, **kwargs):
@@ -28,7 +31,7 @@ class DocumentSearchForm(forms.Form):
         self.helper.form_action = reverse('search_results_url')
         self.helper.form_id = 'form-subject-search'
         self.helper.form_method = 'post'
-        self.helper.html5_required = True
+        self.helper.html5_required = False
         self.helper.layout = Layout(
             Field('title', css_class='input-xlarge'),
             Field('author', css_class='input-xlarge'),

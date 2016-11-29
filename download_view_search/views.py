@@ -1,8 +1,8 @@
 from django.utils import timezone
-
 from django.shortcuts import render
 
 from pumas.views import BaseView
+from pumas.models.user_profiles import Lecture
 
 
 class ViewDocument(BaseView):
@@ -13,7 +13,14 @@ class ViewDocument(BaseView):
         self.title = 'PUMAS'
 
     def get(self, request, *args, **kwargs):
-        self.context.update({'form_class': self.form_class})
+        supervisor = False
+        if request.user.is_authenticated():
+            try:
+                lecture = Lecture.objects.get(user=request.user)
+                supervisor = lecture.is_supervisor
+            except Lecture.DoesNotExist:
+                pass
+        self.context.update({'form_class': self.form_class, 'supervisor': supervisor})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):
@@ -28,6 +35,8 @@ class ViewDocument(BaseView):
 
 class SearchResults(BaseView):
 
+    paginate_by = 10
+
     def __init__(self):
         self.context = {}
         self.template_name = 'search_results.html'
@@ -37,10 +46,18 @@ class SearchResults(BaseView):
         form = self.form_class(request.GET)
         if self.form_valid(form):
             print("Do you really come in here or u do not?")
+        supervisor = False
+        if request.user.is_authenticated():
+            try:
+                lecture = Lecture.objects.get(user=request.user)
+                supervisor = lecture.is_supervisor
+            except Lecture.DoesNotExist:
+                pass
         self.context.update({
             'past_five_years': self.past_five_years,
             'content_types': self.content_types,
-            'form_class': self.form_class})
+            'form_class': self.form_class,
+            'supervisor': supervisor})
         return render(request, self.template_name, self.context)
 
     def post(self, request, *args, **kwargs):

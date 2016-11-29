@@ -1,0 +1,241 @@
+
+// Check if header tag was loaded
+if (typeof ehs_config == "undefined") {
+
+  // Load GPT library
+  !function(){var t="https:"==document.location.protocol,o=(t?"https:":"http:")+"//www.googletagservices.com/tag/js/gpt.js";document.write('\x3Cscript src="'+o+'">\x3C/script>')}();
+
+  // Initialize all variables
+  var ehs_site = ehs_site || "ehs.ehs.ehs.ehs",
+  ehs_zone = ehs_zone || "",
+  ehs_inter = typeof ehs_inter != "undefined" ? ehs_inter : 1,
+  ehs_ismobile = ehs_ismobile || 0,
+  ehs_kw = ehs_kw || "",
+  ehs_size = ehs_size || "",
+  ehs_vpos = ehs_vpos || "",
+  ehs_hpos = ehs_hpos || "",
+  ehs_puid = ehs_puid || "",
+  ehs_kv = ehs_kv || [],
+  ehs_zonepat = /^[A-z]{1}[A-z0-9_-]{1,30}$/i,
+  ehs_kvpat = /^([A-z]{1}[A-z0-9_-]{1,11}=[A-z0-9_-]{1,241})$/i,
+  ehs_sitea = ehs_site.split("."),
+  ehs_class = "class=" + ehs_sitea[1] + ";",
+  ehs_pub = "pub=" + ehs_sitea[2] + ";",
+  ehs_sn = "sn=" + ehs_sitea[3] + ";",
+  ehs_zn = "zn=" + ehs_zone + ";",
+  ehs_path = document.location.pathname,
+  ehs_patha = ehs_path.split("/"),
+  ehs_query = document.location.search,
+  ehs_pgq = ehs_query.replace(/[^A-z0-9_-]/g, "_"),
+  ehs_i = 0,
+  ehs_r = Math.random() * 1e16,
+  ehs_ord = Math.random() * 1e16,
+  ehs_protocol = document.location.protocol == "https:" ? "https://" : "http://",
+  ehs_tt = 0,
+  ehs_target = "/6913/" + ehs_site,
+  cclookup = "",
+  ehs_contkv = "",
+  ehs_z3 = "",
+  ehs_kvtarget="",
+  ehs_krxargs={},
+  krx_confid="";
+  if (ehs_puid=="" && ehs_query.indexOf("puid=")>-1) {
+    ehs_puid=ehs_query.substring(ehs_query.indexOf("puid=")+5);
+  }
+  var ehs_contkv='';var krx_confid='';
+  // Yieldbot.com Intent Tag LOADING
+  if (ehs_sitea[3]=="dic" || ehs_sitea[3]=="healingwell" || ehs_sitea[3]=="justibs") {
+    document.write('\x3Cscript src="//cdn.yldbt.com/js/yieldbot.intent.js">\x3C/script>');
+  }
+
+  // Start pushing all Key-Values into array
+  ehs_kv.push (cclookup);
+  ehs_kv.push(ehs_contkv);
+  ehs_kv.push(ehs_z3);
+  ehs_kv.push (ehs_class, ehs_pub, ehs_sn, ehs_zn);
+
+  // Run through page path and push page key-values into pgp
+  ehs_len = ehs_patha.length;
+  for (ehs_i = 0; ehs_i < ehs_len; ehs_i++) {
+    if (ehs_patha[ehs_i] != "") {
+      ehs_pgp = "pgp=" + ehs_patha[ehs_i].replace(/[^A-z0-9_-]/g, "_") + ";";
+      ehs_kv.push (ehs_pgp);
+    }
+  }
+
+  // Push page query key-value into pgq
+  ehs_pgq = ehs_pgq.length <= 250 ? "pgq="+ehs_pgq.substring(1) + ";" : "pgq=" + ehs_pgq.substring(1,250) + ";";
+  ehs_kv.push(ehs_pgq);
+  if (ehs_protocol == "https://") {
+    ehs_kv.push("ssl=1;");
+  }
+
+  // Add zone to target
+  ehs_target += ehs_zonepat.test(ehs_zone) ? "/"+ehs_zone : "";
+
+  // Convert key-values into doubleclick request and generate krux arguments variable
+  ehs_len = ehs_kv.length;
+  for (ehs_i = 0; ehs_i < ehs_len; ehs_i++) {
+    if (typeof ehs_kv[ehs_i] != "undefined") {
+      ehs_kv[ehs_i] = ehs_kv[ehs_i].replace(/[^A-z0-9_\-=;]/g, "_");
+      if (ehs_kv[ehs_i].slice(-1)!=";")
+      ehs_kv[ehs_i]+=";";
+    }
+  }
+  ehs_kvstring=ehs_kv.join("");
+  ehs_kva=ehs_kvstring.split(";");
+  ehs_len=ehs_kva.length;
+  var ehs_kvarray=[];
+  for (ehs_i=0;ehs_i<ehs_len;ehs_i++){
+    if (ehs_kva[ehs_i].match(/[a-zA-Z0-9_\-]+=[a-zA-Z0-9_\-]+/g)){
+      var ehs_temp=ehs_kva[ehs_i].split("=");
+      if (ehs_kvarray[ehs_temp[0]]===undefined && ehs_temp[1]!="null" && ehs_temp[1]!="")
+      ehs_kvarray[ehs_temp[0]]='"'+ehs_temp[1]+'"';
+      else if (ehs_temp[1]!="null" && ehs_temp[1]!=""){
+        if (ehs_kvarray[ehs_temp[0]].indexOf(ehs_temp[1])==-1)
+        ehs_kvarray[ehs_temp[0]]+=","+'"'+ehs_temp[1]+'"';
+      }
+    }
+  }
+  for (var ehs_kvkey in ehs_kvarray){
+    if (ehs_kvarray.hasOwnProperty(ehs_kvkey)) {
+      var ehs_kvvalue=ehs_kvarray[ehs_kvkey];
+      ehs_kvtarget+=".setTargeting(\""+ehs_kvkey+"\",["+ehs_kvvalue+"])";
+      ehs_krxargs[ehs_kvkey]=ehs_kvvalue.replace(/\"/g, '');
+    }
+  }
+
+  // Function to check if interstitial should be loaded
+  function checkInter() {
+    var e = document.referrer;
+    if (ehs_sitea[3] == "onsconnect") {
+      if (e.indexOf("connect.ons.org") == -1) {
+        return false
+      } else {
+        return true
+      }
+    } else if (ehs_sitea[3] == "drugs") {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  // Function to generate GPT request
+  function EHS_AD (e, t, size) {
+    // Define position variables and tile
+    if(e!="t"&&e!="b")
+    e="t";
+    if(t!="l"&&t!="r")
+    t="r";
+    ehs_tt++;
+    // Define DIV id for GPT
+    ehs_divid=ehs_sitea[2]+"-"+ehs_sitea[3]+"-"+Math.random()*1e16;
+    // Define size
+    dima=size.split(",");
+    ehs_len=dima.length;
+    dim="[";
+    for (ehs_i = 0; ehs_i < ehs_len; ehs_i++) {
+      dima1=dima[ehs_i].split("x");
+      dim+="["+dima1[0]+","+dima1[1]+"],";
+    }
+    dim+="]";
+    // Generate GPT with yieldbot
+    if (ehs_sitea[3]=="dic" || ehs_sitea[3]=="healingwell" || ehs_sitea[3]=="justibs") {
+      // Yieldbot.com Intent Tag ACTIVATION
+      yieldbot.pub('e2be');
+      yieldbot.defineSlot('leaderboard');
+      yieldbot.defineSlot('medrec');
+      yieldbot.defineSlot('sky');
+      yieldbot.go();
+      document.write("<div id='"+ehs_divid+"'>\x3Cscript type='text/javascript'>googletag.defineSlot('"+ehs_target+"',"+dim+",'"+ehs_divid+"').addService(googletag.pubads())"+ehs_kvtarget+".setTargeting('ksg', '"+Krux.segments+"').setTargeting('kuid', '"+Krux.user+"').setTargeting('vp', '"+e+"').setTargeting('hp', '"+t+"').setTargeting('tt', '"+ehs_tt+"');googletag.pubads().setTargeting('ybot',yieldbot.getPageCriteria());googletag.pubads().enableSyncRendering();googletag.enableServices();googletag.display('"+ehs_divid+"');\x3C/script></div>");
+    }
+    // Generate GPT without yieldbot
+    else {
+      document.write("<div id='"+ehs_divid+"'>\x3Cscript type='text/javascript'>googletag.defineSlot('"+ehs_target+"',"+dim+",'"+ehs_divid+"').addService(googletag.pubads())"+ehs_kvtarget+".setTargeting('ksg', '"+Krux.segments+"').setTargeting('kuid', '"+Krux.user+"').setTargeting('vp', '"+e+"').setTargeting('hp', '"+t+"').setTargeting('tt', '"+ehs_tt+"');googletag.pubads().enableSyncRendering();googletag.enableServices();googletag.display('"+ehs_divid+"');\x3C/script></div>");
+    }
+    // Generate interstitial GPT
+    if (ehs_tt==1 && ehs_inter == 1 && checkInter()) {
+      document.write("<div id='"+ehs_divid+"-oop'>\x3Cscript type='text/javascript'>googletag.defineOutOfPageSlot('"+ehs_target+"','"+ehs_divid+"-oop').addService(googletag.pubads())"+ehs_kvtarget+".setTargeting('ksg', '"+Krux.segments+"').setTargeting('kuid', '"+Krux.user+"').setTargeting('vp', '"+e+"').setTargeting('hp', '"+t+"');googletag.pubads().enableSyncRendering();googletag.enableServices();googletag.display('"+ehs_divid+"-oop');\x3C/script></div>");
+    }
+    // Contextual log
+    if (ehs_sitea[3]!="amerpreg") {
+      document.write('<img src="'+ehs_protocol+'ws2.ehealthcaresolutions.com/ws/adlog/?'+document.URL+';'+Math.random()*1e16+'" style="display:none;">');
+    }
+  }
+
+  // Insert Comscore tag
+  if (ehs_sitea[3]!="goodrx") {
+    var pro_ids=["200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233"],pro_vals=["'iprof','n'","'iprof','ph'","'iprof','he'","'ims1','a1'","'ims1','a2'","'ims1','c3'","'ims1','d5'","'ims1','e6'","'ims1','e7'","'ims1','f9'","'ims1','g10'","'ims1','g12'","'ims1','h14'","'ims1','i18'","'ims1','i19'","'ims1','m20'","'ims1','n22'","'ims1','n23'","'ims1','o24'","'ims1','o25'","'ims1','o26'","'ims1','o27'","'ims1','o28'","'ims1','p30'","'ims1','p31'","'ims1','p34'","'ims1','p36'","'ims1','p38'","'ims1','p40'","'ims1','r41'","'ims1','r42'","'ims1','r43'","'ims1','s45'","'ims1','u47'","'cprof','n'","'cprof','ph'","'cprof','he'","'cms1','a1'","'cms1','a2'","'cms1','c3'","'cms1','d5'","'cms1','e6'","'cms1','e7'","'cms1','f9'","'cms1','g10'","'cms1','g12'","'cms1','h14'","'cms1','i18'","'cms1','i19'","'cms1','m20'","'cms1','n22'","'cms1','n23'","'cms1','o24'","'cms1','o25'","'cms1','o26'","'cms1','o27'","'cms1','o28'","'cms1','p30'","'cms1','p31'","'cms1','p34'","'cms1','p36'","'cms1','p38'","'cms1','p40'","'cms1','r41'","'cms1','r42'","'cms1','r43'","'cms1','s45'","'cms1','u47'"],con_ids=["134","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133"],con_vals=["'mcat1','ad1'","'mcat1','al2'","'mcat1','al3'","'mcat1','au4'","'mcat1','au5'","'mcat1','bl6'","'mcat1','bo7'","'mcat1','ca8'","'mcat1','ca9'","'mcat1','ca34'","'mcat1','co10'","'mcat1','de11'","'mcat1','de12'","'mcat1','di13'","'mcat1','ey14'","'mcat1','ga15'","'mcat1','ho16'","'mcat1','in17'","'mcat1','ki18'","'mcat1','li19'","'mcat1','li20'","'mcat1','me21'","'mcat1','me22'","'mcat1','ne23'","'mcat1','nu24'","'mcat1','pa25'","'mcat1','pe26'","'mcat1','pr27'","'mcat1','re28'","'mcat1','se29'","'mcat1','sl30'","'mcat1','st31'","'mcat1','ur32'","'mcat1','wo33'","'ccat1','ad1'","'ccat1','al2'","'ccat1','al3'","'ccat1','au4'","'ccat1','au5'","'ccat1','bl6'","'ccat1','bo7'","'ccat1','ca8'","'ccat1','ca9'","'ccat1','ca34'","'ccat1','co10'","'ccat1','de11'","'ccat1','de12'","'ccat1','di13'","'ccat1','ey14'","'ccat1','ga15'","'ccat1','ho16'","'ccat1','in17'","'ccat1','ki18'","'ccat1','li19'","'ccat1','li20'","'ccat1','me21'","'ccat1','me22'","'ccat1','ne23'","'ccat1','nu24'","'ccat1','pa25'","'ccat1','pe26'","'ccat1','pr27'","'ccat1','re28'","'ccat1','se29'","'ccat1','sl30'","'ccat1','st31'","'ccat1','ur32'","'ccat1','wo33'"],pro_len = pro_ids.length,con_len = con_ids.length,com_val = "";
+    if ("pro" == ehs_sitea[1]) {
+      for (var i = 0; pro_len > i; i++)
+      if (-1 !== ehs_kvtarget.indexOf(pro_vals[i])) {
+        com_val = pro_ids[i];
+        break
+      }
+    } else if ("con" == ehs_sitea[1])
+    for (var i = 0; con_len > i; i++)
+    if (-1 !== ehs_kvtarget.indexOf(con_vals[i])) {
+      com_val = con_ids[i];
+      break
+    }
+    window._comscore = window._comscore || [];
+    _comscore.push({
+      c1: "8",
+      c2: "9216157",
+      c3: com_val
+    });
+    (function() {
+      var s = document.createElement("script"),
+      el = document.getElementsByTagName("script")[0];
+      s.async = true;
+      s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+      el.parentNode.insertBefore(s, el);
+    })();
+  }
+
+  // KRUX control tag
+  if (krx_confid!="") {
+    window.Krux||((Krux=function(){Krux.q.push(arguments)}).q=[]);
+    (function(){
+      var k=document.createElement('script');k.type='text/javascript';k.async=true;
+      var m,src=(m=location.href.match(/\bkxsrc=([^&]+)/))&&decodeURIComponent(m[1]);
+      k.src = /^https?:\/\/([a-z0-9_\-\.]+\.)?krxd\.net(:\d{1,5})?\//i.test(src) ? src : src === "disable" ? "" :
+      (location.protocol==="https:"?"https:":"http:")+"//cdn.krxd.net/controltag?confid="+krx_confid;
+      var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(k,s);
+    }());
+  }
+  // KRUX O&O
+  window.Krux||((Krux=function(){Krux.q.push(arguments);}).q=[]);
+  (function(){
+    function retrieve(n){
+      var m, k='kxehealthcare_'+n;
+      if(window.localStorage){
+        return window.localStorage[k] || "";
+      }else if(navigator.cookieEnabled){
+        m = document.cookie.match(k+'=([^;]*)');
+        return (m && unescape(m[1])) || "";
+      }else{
+        return '';
+      }
+    }
+    Krux.user = retrieve('user');
+    Krux.segments = retrieve('segs') && retrieve('segs').split(',') || [];
+  })();
+
+  // KRUX custom event pixel
+  if (cclookup.indexOf("biopharmonc0613")>0) {
+    document.write('<img src="https://beacon.krxd.net/event.gif?event_id=Kt0c-3Rl&event_type=ad&src=biopharmonc0613" width=0 height=0 style="display:none;">');
+  }
+
+  // Set configuration to true
+  var ehs_config=true;
+}
+
+// If size is set in the header, display ad right away
+if (ehs_size != "") {
+  EHS_AD(ehs_vpos, ehs_hpos , ehs_size);
+}
+
+// Empty key-value array
+ehs_kv = [];

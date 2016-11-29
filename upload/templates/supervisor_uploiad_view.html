@@ -10,7 +10,6 @@
 	    <div class="panel panel-default">
 	      <div class="panel-heading">Documents to be approved</div>
 	      <div class="panel-body">
-	      
 	      <table data-toggle="table"
 	       data-pagination="true"
 	       data-search="true">
@@ -18,52 +17,18 @@
 	    <th data-field="student_id">Student ID</th>
 	    <th data-field="doc_title">Document title</th>
 	    <th data-field="source_code">Source Code</th>
-	    <th data-field="program">Program</th> 
-	    <th data-field="graduate_undergraduate">Graduate/Undergraduate</th>                                    
+	    <th data-field="program">Program</th>                                 
 	    </thead>
 	    <tbody>
-	            <tr>
-	            <td>200800533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Heath Robotics</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
-	            <tr>
-	            <td>200100533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Heath Infromatics</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
-	            <tr>
-	            <td>201500533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Data Warehouse Reetail store Choppies</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
-	            <tr>
-	            <td>201500533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Data Warehouse Reetail store Choppies</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
-	            <tr>
-	            <td>201500533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Data Warehouse Reetail store Choppies</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
-	            <tr>
-	            <td>201500533</td>
-	            <td><a href="{% url 'approve_document_url' %}">Data Warehouse Reetail store Choppies</a></td>
-	            <td><a href="{% url 'approve_document_url' %}">link to the source code</a></td>
-	            <td>Computer Science</td>
-	            <td>Undergraduate</td>
-	            </tr>
+	    	{% for document in documents %}
+	    	<tr>
+            <td>{{document.0}}</td>
+            
+            <td><a href="{% url 'approve_document_url' document.4 %}">{{document.1}} | {{document.4}}</a></td>
+            <td><a href="#">link to the source code</a></td>
+            <td>{{document.3}}</td>
+            </tr>
+	    	{% endfor %}
 	    </tbody>
 	    </table>
 	      

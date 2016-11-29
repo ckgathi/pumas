@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from pumas.models.base_model import BaseModel
 
 
-class Lecture(models.Model):
+class Lecture(BaseModel):
 
     user = models.OneToOneField(User)
 
-    stuff_id = models.IntegerField(
+    staff_id = models.IntegerField(
         verbose_name='Stuff Identifier',
         unique=True,
         help_text="Stuff identifier",
@@ -16,11 +17,14 @@ class Lecture(models.Model):
         verbose_name='Are you a supervisor',
         default=False,)
 
+    def __str__(self):
+        return "{0}, {1}".format(self.staff_id, self.user.username)
+
     class Meta:
         app_label = 'pumas'
 
 
-class Student(models.Model):
+class Student(BaseModel):
 
     user = models.OneToOneField(User)
 
@@ -28,10 +32,9 @@ class Student(models.Model):
         verbose_name='Student Identifier',
         unique=True,
         help_text="Student identifier",
-        editable=False,
         db_index=True)
 
-    supervisor = models.OneToOneField(Lecture)
+    supervisor = models.ForeignKey(Lecture)
 
     faculty = models.CharField(
         verbose_name="Faculty",
@@ -41,15 +44,21 @@ class Student(models.Model):
         verbose_name="Programe of Study",
         max_length=150)
 
+    def __str__(self):
+        return "{0}, {1}".format(self.student_id, self.user.username)
+
     class Meta:
         app_label = 'pumas'
 
 
-class Admin(models.Model):
+class Admin(BaseModel):
 
     user = models.OneToOneField(User)
 
-    stuff_id = models.IntegerField()
+    staff_id = models.IntegerField()
+
+    def __str__(self):
+        return "{0}, {1}".format(self.staff_id, self.user.username)
 
     class Meta:
         app_label = 'pumas'

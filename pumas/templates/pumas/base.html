@@ -5,23 +5,36 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
-
 {% block header %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
 
+<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
   
     <title>Pumas</title>
+    <script>
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+  <!--   <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">--> 
+    
+	<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+	<link href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -29,15 +42,7 @@
     <!-- Custom styles for this template -->
     <link href="navbar.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
 <style>
 body {
@@ -84,6 +89,7 @@ body {
     }
 }
 </style>
+
 {% block extra-css %}
 {% endblock extra-css %}
  </head>
@@ -108,18 +114,31 @@ body {
             </button>
             <a class="navbar-brand" href="{% url 'home_url' %}">Pumas</a>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
+          <div id="navbar" class="navbar-collapse collapse" class="panel-heading clearfix">
             <ul class="nav navbar-nav">
               <li class="active"><a href="{% url 'home_url' %}">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
-		        <li><a href="{% url 'upload_url' %}">Upload document</a></li>
+		        <li><a href="{% url 'upload_url' %}">Upload Docs</a></li>
 		        {% if supervisor %}
-		        <li><a href="{% url 'supervisor_upload_view_url' %}">Approve documents</a></li>
+		        	<li><a href="{% url 'supervisor_upload_view_url' %}">Approve Docs</a></li>
 		        {% endif %}
+		        <li><a href="{% url 'admin:index' %}">Admin</a></li>
+		        <li><a href="">{{user.username}}</a></li>
+		        <li>
+		        	<a href="{% url 'logout_url' %}">
+	                <button type="button" class="btn btn-default btn-sm">
+			          <span class="glyphicon glyphicon-log-out"></span> Log out
+			        </button>
+			        </a>
+		        </li>
 		      {% else %}
-              	<li><a href="{% url 'login_url' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a></li>
+              	<li><a href="{% url 'login_url' %}" class="top-menu">
+	              	<button type="button" class="btn btn-default btn-sm">
+			          <span class="glyphicon glyphicon-log-out"></span> Log in
+			        </button>
+				</a></li>
               {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
@@ -167,13 +186,5 @@ body {
   </div>
 </footer>
 {% endblock footer %}
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
  </body>
 </html>

@@ -1,289 +1,190 @@
-{% load staticfiles%}
+{% extends 'pumas/base.html' %}
 
-<script src="../static/js/jquery.js" ></script>
-<script src="../static/js/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css" href="../static/css/jquery.dataTables.css"/>
+
+{% load staticfiles %}
+{% block extra-css %}
 <script>
-/* Formatting function for row details - modify as you need */
-function format ( d ) {
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Full name:</td>'+
-            '<td>'+d.name+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+d.extn+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
-}
+$(function() {
 
-	$(document).ready(function() {
-	    var table = $('#example').DataTable();
-	
-	   $('#example tbody').on('click', 'td.details-control', function () {
-	        var tr = $(this).closest('tr');
-	        var row = table.row( tr );
-	 
-	        if ( row.child.isShown() ) {
-	            // This row is already open - close it
-	            row.child.hide();
-	            tr.removeClass('shown');
-	        }
-	        else {
-	            // Open this row
-	            row.child( format(row.data()) ).show();
-	            tr.addClass('shown');
-	        }
-	    } );
-	} );
+  // We can attach the `fileselect` event to all file inputs on the page
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  // We can watch for our custom `fileselect` event like this
+  $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+
+          var input = $(this).parents('.input-group').find(':text'),
+              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+          if( input.length ) {
+              input.val(log);
+          } else {
+              if( log ) alert(log);
+          }
+
+      });
+  });
+  
+});
+
 </script>
 
-<table id="example"  class="display" cellspacing="0" width="100%">
- 
-        <thead>
-            <tr style="background:#c2b5ce;">
-	            <th></th>
-	            <th></th>
-                <th>Doc Name</th>
-                <th>Author</th>
-                <th>Year of publication</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tfoot style="background:#c2b5ce">
-              <tr style="background:#c2b5ce">
-              	<th></th>
-              	<th></th>
-                <th>Doc Name</th>
-                <th>Author</th>
-                <th>Year of publication</th>
-                <th>Category</th>
-            </tr>
-        </tfoot>
-      
-        <tbody>
-            <tr>
-            	<td class="details-control">abstract</td>
-                <td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Tiger Nixon</td>	
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-                <td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Colleen Hurst</td>
-                <td>Javascript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Charde Marshall</td>
-                <td>Regional Director</td>
-                <td>San Francisco</td>
-                <td>36</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Michael Silva</td>
-                <td>Marketing Designer</td>
-                <td>London</td>
-                <td>66</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Paul Byrd</td>
-                <td>Chief Financial Officer (CFO)</td>
-                <td>New York</td>
-                <td>64</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Gloria Little</td>
-                <td>Systems Administrator</td>
-                <td>New York</td>
-                <td>59</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Bradley Greer</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>41</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Dai Rios</td>
-                <td>Personnel Lead</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Jenette Caldwell</td>
-                <td>Development Lead</td>
-                <td>New York</td>
-                <td>30</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Yuri Berry</td>
-                <td>Chief Marketing Officer (CMO)</td>
-                <td>New York</td>
-                <td>40</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Caesar Vance</td>
-                <td>Pre-Sales Support</td>
-                <td>New York</td>
-                <td>21</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Doris Wilder</td>
-                <td>Sales Assistant</td>
-                <td>Sidney</td>
-                <td>23</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-            	<td >theghet</td>
-                <td >Paul Pogba</td>
-                <td>Chief Executive Officer (CEO)</td>
-                <td>London</td>
-                <td>47</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Gavin Joyce</td>
-                <td>Developer</td>
-                <td>Edinburgh</td>
-                <td>42</td>
-            </tr>
-            <tr>
-            	<td class="details-control">abstract</td>
-            	<td><a href="#"><img src="../static/images/adobe.png" width="35" height="35"/></a></td>
-                <td>Jennifer Chang</td>
-                <td>Regional Director</td>
-                <td>Singapore</td>
-                <td>28</td>
-            </tr>
-           
-        </tbody>
-    </table>
+{% endblock extra-css %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="panel-group">
+    
+	    <div class="panel panel-default">
+	      <div class="panel-heading">Documents Uploads</div>
+	      <div class="panel-body">
+			<div class="container" style="margin-top: 20px;">
+			    <div class="row">
+			    {% if is_lecture %}
+			    	<a href="{% url 'admin:pumas_dessertation_add' %}"><button type="button" class="btn btn-default disabled">Dessertation</button></a>
+			    	<a href="{% url 'admin:pumas_projectdocument_add' %}"><button type="button" class="btn btn-default disabled">Project Document</button></a>
+			    	<a href="{% url 'admin:pumas_thesis_add' %}"><button type="button" class="btn btn-default disabled">Thesis</button></a>
+			    	<a href="{% url 'admin:pumas_journal_add' %}"><button type="button" class="btn btn-default">Journal</button></a>
+				    <a href="{% url 'admin:pumas_conferencepreceeding_add' %}"><button type="button" class="btn btn-default">Conference Preceeding</button></a>
+				    <a href="{% url 'admin:pumas_bookchapter_add' %}"><button type="button" class="btn btn-default">Book Chapter</button></a>
+			    {% else %}
+			    	{% if is_student_undergraduate %}
+			    		<a href="{% url 'admin:pumas_projectdocument_add' %}"><button type="button" class="btn btn-default">Project Document</button></a>
+			    		<a href="{% url 'admin:pumas_dessertation_add' %}"><button type="button" class="btn btn-default disabled">Dessertation</button></a>
+				    	<a href="{% url 'admin:pumas_thesis_add' %}"><button type="button" class="btn btn-default disabled disabled">Thesis</button></a>
+				    	<a href="{% url 'admin:pumas_journal_add' %}"><button type="button" class="btn btn-default disabled">Journal</button></a>
+					    <a href="{% url 'admin:pumas_conferencepreceeding_add' %}"><button type="button" class="btn btn-default disabled">Conference Preceeding</button></a>
+					    <a href="{% url 'admin:pumas_bookchapter_add' %}"><button type="button" class="btn btn-default disabled">Book Chapter</button></a>
+			    	{% else %}
+			    		<a href="{% url 'admin:pumas_projectdocument_add' %}"><button type="button" class="btn btn-default disabled">Project Document</button></a>
+			    		<a href="{% url 'admin:pumas_dessertation_add' %}"><button type="button" class="btn btn-default">Dessertation</button></a>
+				    	<a href="{% url 'admin:pumas_thesis_add' %}"><button type="button" class="btn btn-default">Thesis</button></a>
+				    	<a href="{% url 'admin:pumas_journal_add' %}"><button type="button" class="btn btn-default">Journal</button></a>
+					    <a href="{% url 'admin:pumas_conferencepreceeding_add' %}"><button type="button" class="btn btn-default">Conference Preceeding</button></a>
+					    <a href="{% url 'admin:pumas_bookchapter_add' %}"><button type="button" class="btn btn-default">Book Chapter</button></a>
+				    	
+			    	{% endif %}
+			    {% endif %}
+			    </div>
+			</div>
+		<hr />
+	  	<div class="row" style="margin-bottom:20px;">
+		<div class="col-md-4">
+  	
+  		<div class="panel panel-success">
+      <div class="panel-heading">Dessertations</div>
+      <div class="panel-body">
+      <ul><hr />
+		{% for dessertation in dessertations %}
+			<li>{{dessertation.title}},<br />
+			<a href="{{dessertation.document.url}}">View full text</a> <br />
+     		<a href="{{dessertation.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+  	</div>
+  	
+  	<div class="col-md-4">
+  	    <div class="panel panel-success">
+      <div class="panel-heading">Project Documents
+      </div>
+      <div class="panel-body">
+		<ul><hr />
+		{% for project_document in project_documents %}
+			<li>{{project_document.title}},<br />
+			<a href="{{project_document.document.url}}">View full text</a> <br />
+     		<a href="{{project_document.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+	</div>   
+  	
+  	
+  	<div class="col-md-4">
+  	    <div class="panel panel-success">
+      <div class="panel-heading">Journals
+      </div>
+      <div class="panel-body">
+		<ul><hr />
+		{% for journal in journals %}
+			<li>{{journal.title}},<br />
+			<a href="{{journal.document.url}}">View full text</a> <br />
+     		<a href="{{journal.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+	</div>
+     
+</div>
+
+<div class="row">
+		<div class="col-md-4">
+  	
+  		<div class="panel panel-success">
+      <div class="panel-heading">Conference Preceedings</div>
+      <div class="panel-body">
+      <ul><hr />
+		{% for conference_preceeding in conference_preceedings %}
+			<li>{{conference_preceeding.title}},<br />
+			<a href="{{conference_preceeding.document.url}}">View full text</a> <br />
+     		<a href="{{conference_preceeding.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+  	</div>
+  	
+  	<div class="col-md-4">
+  	    <div class="panel panel-success">
+      <div class="panel-heading">Book Chapters
+      </div>
+      <div class="panel-body">
+		<ul><hr />
+		{% for bookchapter in bookchapters %}
+			<li>{{bookchapter.title}},<br />
+			<a href="{{bookchapter.document.url}}">View full text</a> <br />
+     		<a href="{{bookchapter.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+	</div>   
+  	
+  	
+  	<div class="col-md-4">
+  	    <div class="panel panel-success">
+      <div class="panel-heading">Thesis
+      </div>
+      <div class="panel-body">
+		<ul><hr />
+		{% for thesis in thesiss %}
+			<li>{{thesis.title}},<br />
+			<a href="{{thesis.document.url}}">View full text</a> <br />
+     		<a href="{{thesis.document.url}}" download>Download pdf</a></li>
+     		<hr />
+		{% endfor %}
+		</ul>
+      </div>
+    </div>
+	</div>
+	      
+</div>
+	      </div>
+	      
+	    </div>
+   </div>
+{% endblock content %}
